@@ -1,0 +1,3 @@
+hostname:port:dbname:username:password
+ipaddr:5432:test:test:password
+fqdn:5432:test:test:password

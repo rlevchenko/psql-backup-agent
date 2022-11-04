@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  psql-backup:
+    image: psql-simple-backup
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      labels:
+        - "com.example.author==rlevchenko.com"
+    container_name: psql-rl-backup
+    restart: always
+    volumes:
+      - "./psql/backups:/backup/storage"

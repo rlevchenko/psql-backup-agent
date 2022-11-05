@@ -1,3 +1,8 @@
+#-----------------------------------------------------------
+# Dockerfile | rlevchenko.com
+# PROVIDED WITHOUT WARRANTY OF ANY KIND
+#-----------------------------------------------------------
+
 FROM alpine:3.16.2
 LABEL AUTHOR="Roman Levchenko"
 LABEL WEBSITE="rlevchenko.com"

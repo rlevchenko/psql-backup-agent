@@ -1,7 +1,9 @@
 # A simple PostgreSQL backup agent
 ## Description
 
-Dockerized cron job to backup PostgreSQL database or multiple databases on different hosts. Based on Alpine docker image, so the image is about 11 Mb. The script can be also used without docker or docker compose. However, my recommendation is to run docker container on your backup host to provide a kind of isolation. Blog post is [here](https://rlevchenko.com/2022/11/05/simple-postgresql-backup-agent/).
+Dockerized cron job to backup PostgreSQL database or multiple databases on different hosts. Based on Alpine docker image, so the image is about 11 Mb. The script can be also used without docker or docker compose. However, my recommendation is to run docker container on your backup host to provide a kind of isolation. 
+
+Blog post is [here](https://rlevchenko.com/2022/11/05/simple-postgresql-backup-agent/).
 
 The script or "agent" does the following:
 

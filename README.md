@@ -9,7 +9,7 @@ The script or "agent" does the following:
 - Creates arrays for each connection parameter (hostnames -> array1 and so on)
 - Verifies if the backup can be done by executing a dry run for each db
 - If the dry run is ok, produces backup archive and compresses it with gzip
-- Cleans up the storage folder. Files older than 30 days are deleted
+- Cleans up the storage folder. Backup archives older than 30 days are deleted
 - Redirects all cron job statuses to stdout
 - Keeps backup files under ./psql/backups/{hostname}/{dbname}/ on your host
 - Default schedule: twice a day, at 8:30 and 20:30 UTC
@@ -32,7 +32,8 @@ Blog post is [here](https://rlevchenko.com/2022/11/05/simple-postgresql-backup-a
 
 - check out the */config/passfile* and provide your own connection parameters 
 - verify the cron job settings in the */config/cronfile*
-- edit dockerfile/docker-compose.yml or script itself if necessary 
+- edit dockerfile/docker-compose.yml if necessary 
+- set *cleaner* function argument at the bottom of the script if necessary 
 - run *docker compose build* 
 - run *docker compose up -d*
 - check out the stoud of the container to get the job's status

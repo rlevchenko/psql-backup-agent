@@ -56,15 +56,36 @@ function make_backup()
 for (( i=0; i<arrLength; i++ ));
 	do
 		echo -e "\n${GREEN}[INFO]${OFF} ${BOLD}Doing a backup of the database ${dbArray[$i]}${OFF} "
-		set -o pipefail -e
-			if ! pg_dump -Fp -w -U "${userArray[$i]}" -h "${hnArray[$i]}" -p "${portArray[$i]}" -d "${dbArray[$i]}" | gzip > $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".sql.gz.temp; then
+		
+		# Plain
+		if [ "$1" = "plain" ] 
+		then 
+			set -o pipefail -e
+			if ! pg_dump -Fp -w -U "${userArray[$i]}" -h "${hnArray[$i]}" -p "${portArray[$i]}" -d "${dbArray[$i]}" | gzip > $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".sql.gz.temp; 
+			then
 				echo -e "${RED}::::[ERROR]${OFF} ${BOLD}Failed to produce backup database ${dbArray[$i]}${OFF}" 1>&2
 				rm -f $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".sql.gz.temp
 			else
 				mv $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".sql.gz.temp $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".sql.gz
                 echo -e "\n${GREEN}::::[INFO]${OFF} ${BOLD}Backup for database ${dbArray[$i]} has been completed!${OFF}"
 			fi
-		set +o pipefail +e
+			set +o pipefail +e
+		fi
+		
+		# Custom
+		if [ "$1" = "custom" ] 
+		then 
+			set -o pipefail -e
+			if ! pg_dump -Fc -w -U "${userArray[$i]}" -h "${hnArray[$i]}" -p "${portArray[$i]}" -d "${dbArray[$i]}" -f  $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom.temp; 
+			then
+				echo -e "${RED}::::[ERROR]${OFF} ${BOLD}Failed to produce backup database ${dbArray[$i]}${OFF}" 1>&2
+				rm -f $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom.temp
+			else
+				mv $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom.temp $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom
+                echo -e "\n${GREEN}::::[INFO]${OFF} ${BOLD}Backup for database ${dbArray[$i]} has been completed!${OFF}"
+			fi
+			set +o pipefail +e
+		fi
 	done
 }
 
@@ -72,9 +93,10 @@ for (( i=0; i<arrLength; i++ ));
 function cleaner()
 {
 set -o pipefail -e
-	if [[ -n $(find /backup/storage/ -name "*.sql.gz" -type f -mtime +"$1") ]]; then
+	if [[ -n $(find /backup/storage/ \( -name "*.sql.gz" -o -name "*.custom" \) -type f -mtime +"$1") ]]; 
+	then
 		echo -e "\n${GREEN}[INFO]${OFF} ${BOLD}There are backup files older than $1 days. Cleaning up the following files:${OFF}"
-		find /backup/storage/ -name "*.sql.gz" -print -type f -mtime +"$1" -exec rm {} \;
+		find /backup/storage/ \(-name "*.sql.gz" -o -name "*.custom" \) -print -type f -mtime +"$1" -exec rm {} \;
 	else 
 		echo -e "\n${GREEN}[INFO]${OFF} ${BOLD}There are no backup files older than $1 days. \nHave a nice day!${OFF}"
 	fi
@@ -83,7 +105,7 @@ set +o pipefail +e
 
 setcolors
 create_dirs
-make_backup
+make_backup "custom" # custom format is more flexible; other valid value is "plain"
 cleaner "30" # if modified >30 days, do a clean
 
 

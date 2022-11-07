@@ -82,7 +82,7 @@ for (( i=0; i<arrLength; i++ ));
 				rm -f $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom.temp
 			else
 				mv $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom.temp $BACKUP_DIR"${hnArray[$i]}"/"${dbArray[$i]}"/"$TIMESTAMP".custom
-                echo -e "\n${GREEN}::::[INFO]${OFF} ${BOLD}Backup for database ${dbArray[$i]} has been completed!${OFF}"
+                echo -e "${GREEN}::::[INFO]${OFF} ${BOLD}Backup for database ${dbArray[$i]} has been completed!${OFF}"
 			fi
 			set +o pipefail +e
 		fi

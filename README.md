@@ -33,13 +33,13 @@ Blog post is [here](https://rlevchenko.com/2022/11/05/simple-postgresql-backup-a
 
 - check out the */config/passfile* and provide your own connection parameters 
 - verify the cron job settings in the */config/cronfile* 
-- change *make_backup* function argument to change format output (plain/custom)
+- change *make_backup* function argument to set format output (plain/custom)
 - set *cleaner* function argument at the bottom of the script if necessary 
 - edit dockerfile/docker-compose.yml if necessary
 - run *docker compose build* 
 - run *docker compose up -d*
 - check out the stoud of the container to get the job's status
-- TO RESTORE: use psql (if plain set) or pg_restore command (if custom format set)
+- TO RESTORE: use *psql* (if plain set) or *pg_restore* command (if custom format set)
 
 
 ## Result

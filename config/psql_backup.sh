@@ -96,7 +96,7 @@ set -o pipefail -e
 	if [[ -n $(find $BACKUP_DIR \( -name "*.sql.gz" -o -name "*.custom" \) -type f -mtime +"$1") ]]; 
 	then
 		echo -e "\n${GREEN}[INFO]${OFF} ${BOLD}There are backup files older than $1 days. Cleaning up the following files:${OFF}"
-		find $BACKUP_DIR \(-name "*.sql.gz" -o -name "*.custom" \) -print -type f -mtime +"$1" -exec rm {} \;
+		find $BACKUP_DIR \( -name "*.sql.gz" -o -name "*.custom" \) -print -type f -mtime +"$1" -exec rm {} \;
 	else 
 		echo -e "\n${GREEN}[INFO]${OFF} ${BOLD}There are no backup files older than $1 days. \nHave a nice day!${OFF}"
 	fi

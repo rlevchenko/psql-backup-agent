@@ -10,7 +10,7 @@ RUN mkdir /etc/periodic/custom \
     && mkdir -p /backup/config \ 
     && touch /var/log/cron.log \
     && apk --no-cache add \
-    postgresql14-client=14.5-r0 \
+    postgresql14-client=14.9-r0 \
     bash=5.1.16-r2
 COPY /config/cronfile /etc/crontabs/root
 COPY /config/psql_backup.sh /etc/periodic/custom/backup

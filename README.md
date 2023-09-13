@@ -1,3 +1,7 @@
+[![Build docker agent image](https://github.com/rlevchenko/psql-backup-agent/actions/workflows/docker-image.yml/badge.svg)](https://github.com/rlevchenko/psql-backup-agent/actions/workflows/docker-image.yml)
+[![Check My Blog](https://img.shields.io/badge/check-blog-post)]([https://rlevchenko.com/2023/09/12/simple-clickhouse-backup-agent/](https://rlevchenko.com/2022/11/05/simple-postgresql-backup-agent/))
+[![LinkedIn](https://img.shields.io/twitter/follow/rlevchenko)](https://twitter.com/rlevchenko)
+
 # Simple PostgreSQL backup agent
 ## Description
 
